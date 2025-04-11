@@ -29,7 +29,7 @@ const weeklyMessage = text`
 // The expression "0 18 * * 5" means: at minute 0 of hour 18 (6:00 PM) on every Friday.
 // Adjust if you need a different time.
 const testPeriod = "* * * * *";
-const realPeriod = "0 12 * * 5";
+const realPeriod = "0 3 * * 5";
 Deno.cron("post message periodically", realPeriod, async () => {
   try {
     // Use the actual domain for your bot.
