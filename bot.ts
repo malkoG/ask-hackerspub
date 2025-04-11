@@ -6,7 +6,7 @@ import { InProcessMessageQueue } from "@fedify/fedify/federation";
 
 // Create your bot instance.
 const bot = createBot<void>({
-  username: "hackerspub_ask_bot",
+  username: "bot",
   name: "HackersPub Ask Bot",
   summary: text`주기적으로 Hackers' Pub에 질문을 남기는 봇입니다.`,
   kv: new MemoryKvStore(),
@@ -29,11 +29,11 @@ const weeklyMessage = text`
 // The expression "0 18 * * 5" means: at minute 0 of hour 18 (6:00 PM) on every Friday.
 // Adjust if you need a different time.
 const testPeriod = "* * * * *";
-const realPeriod = "15 1 * * 6";
+const realPeriod = "23 1 * * 6";
 Deno.cron("post message periodically", realPeriod, async () => {
   try {
     // Use the actual domain for your bot.
-    const session = bot.getSession("https://hakcerspub-ask-bot.deno.dev");
+    const session = bot.getSession("https://hackerspub-ask-bot.deno.dev");
     await session.publish(weeklyMessage);
     console.log("Weekly message posted");
   } catch (error) {

@@ -34,7 +34,7 @@ jobs:
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
-          project: "hakcerspub-ask-bot"
+          project: "hackerspub-ask-bot"
           entrypoint: "./bot.ts"
           root: ""
           
