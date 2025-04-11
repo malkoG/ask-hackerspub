@@ -1,16 +1,16 @@
 import { createBot, text } from "@fedify/botkit";
 // For development, we use in‑memory KV store and message queue.
 // For production, replace these with persistent implementations.
-import { MemoryKvStore } from "@fedify/fedify/federation";
-import { InProcessMessageQueue } from "@fedify/fedify/federation";
+import { DenoKvMessageQueue, DenoKvStore } from "@fedify/fedify/x/denokv";
 
+const kv = await Deno.openKv();
 // Create your bot instance.
 const bot = createBot<void>({
   username: "bot",
   name: "HackersPub Ask Bot",
   summary: text`주기적으로 Hackers' Pub에 질문을 남기는 봇입니다.`,
-  kv: new MemoryKvStore(),
-  queue: new InProcessMessageQueue(),
+  kv: new DenoKvStore(kv),
+  queue: new DenoKvMessageQueue(kv),
 });
 
 // Create the weekly post content using the new header.
@@ -29,7 +29,7 @@ const weeklyMessage = text`
 // The expression "0 18 * * 5" means: at minute 0 of hour 18 (6:00 PM) on every Friday.
 // Adjust if you need a different time.
 const testPeriod = "* * * * *";
-const realPeriod = "23 1 * * 6";
+const realPeriod = "40 1 * * 6";
 Deno.cron("post message periodically", realPeriod, async () => {
   try {
     // Use the actual domain for your bot.
