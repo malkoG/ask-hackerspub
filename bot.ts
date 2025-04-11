@@ -33,7 +33,7 @@ const realPeriod = "0 12 * * 5";
 Deno.cron("post message periodically", realPeriod, async () => {
   try {
     // Use the actual domain for your bot.
-    const session = bot.getSession("https://hackerspub.kodingwarrior.dev");
+    const session = bot.getSession("https://hakcerspub-ask-bot.deno.dev");
     await session.publish(weeklyMessage);
     console.log("Weekly message posted");
   } catch (error) {
