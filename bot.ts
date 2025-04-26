@@ -1,16 +1,24 @@
-import { createBot, text } from "@fedify/botkit";
+import {
+  createBot,
+  KvRepository,
+  MemoryCachedRepository,
+  text,
+} from "@fedify/botkit";
 // For development, we use in‑memory KV store and message queue.
 // For production, replace these with persistent implementations.
 import { DenoKvMessageQueue, DenoKvStore } from "@fedify/fedify/x/denokv";
 
-const kv = await Deno.openKv();
+const denoKv = await Deno.openKv();
+const kv = new DenoKvStore(denoKv);
+
 // Create your bot instance.
 const bot = createBot<void>({
   username: "bot",
   name: "HackersPub Ask Bot",
   summary: text`주기적으로 Hackers' Pub에 질문을 남기는 봇입니다.`,
-  kv: new DenoKvStore(kv),
-  queue: new DenoKvMessageQueue(kv),
+  kv,
+  queue: new DenoKvMessageQueue(denoKv),
+  repository: new MemoryCachedRepository(new KvRepository(kv)),
 });
 
 // Create the weekly post content using the new header.
