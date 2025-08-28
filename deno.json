@@ -1,8 +1,8 @@
 {
   "name": "@hackerspub/ask-bot",
   "imports": {
-    "@fedify/botkit": "jsr:@fedify/botkit@^0.3.0-dev.97+783c469e",
-    "@fedify/fedify": "jsr:@fedify/fedify@^1.5.1"
+    "@fedify/botkit": "jsr:@fedify/botkit@^0.3.0",
+    "@fedify/fedify": "jsr:@fedify/fedify@^1.8.6"
   },
   "unstable": ["temporal", "cron"],
   "exports": "./bot.ts",
